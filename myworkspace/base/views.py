@@ -44,6 +44,11 @@ class WorkspaceList(LoginRequiredMixin, ListView):
     model = Workspace
     context_object_name = "workspaces"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['workspaces'] = context['workspaces'].filter(users=self.request.user)
+        return context
+
 class WorkspaceTasks(LoginRequiredMixin, ListView):
     model = Tasks
     context_object_name = "tasks"

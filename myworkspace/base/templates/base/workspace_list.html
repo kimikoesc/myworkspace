@@ -1,17 +1,11 @@
-{% if request.user.is_authenticated %}
-    <p>{{request.user}}</p>
-    <a href="{% url 'logout' %}"><button>Logout</button></a>
-{% else %}
-    <a href="{% url 'login' %}"><button>Login</button></a>
-{% endif %}
+{% extends 'base/main.html' %}
+{% block content %}
 
-<hr>
-<h1>Your Workspaces</h1> 
+<h2>Your Workspaces</h2> 
 <a href="{% url 'new-workspace' %}">Add a workspace</a>
 
 <table>
     <tr>
-        <th> Item </th>
         <th></th>
         <th></th>
     </tr>
@@ -30,3 +24,5 @@
     <h3> You currently have no workspaces </h3>
     {% endfor %}
 </table>
+
+{% endblock content %}
