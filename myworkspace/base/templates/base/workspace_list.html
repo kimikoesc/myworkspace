@@ -1,8 +1,11 @@
-<h1>Workspace List</h1> 
+<h1>Your Workspaces</h1> 
+<a href="{% url 'new-workspace' %}">Add a workspace</a>
 
 <table>
     <tr>
         <th> Item </th>
+        <th></th>
+        <th></th>
     </tr>
     {% for workspace in workspaces %}
     <tr>
@@ -11,6 +14,9 @@
             <input type="hidden" name='id' value="{{ workspace.id }}">
             <td><input type="submit" value='view'></td>
         </form>
+        <td><a href="{% url 'edit-workspace' workspace.id %}">Edit</td>
+        <td><a href="{% url 'delete-workspace' workspace.id %}">Delete</td>
+
     </tr>
     {% empty %}
     <h3> You currently have no workspaces </h3>

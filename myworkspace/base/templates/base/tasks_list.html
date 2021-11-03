@@ -1,12 +1,17 @@
 <h1>Workspace Tasks</h1>
+<a href="{% url 'new-task' %}">Add Task</a>
 
 <table>
     <tr>
         <th> Item </th>
+        <th></th>
+        <th></th>
     </tr>
     {% for task in tasks %}
     <tr>
         <th> {{ task }} </th>
+        <td><a href="{% url 'edit-task' task.id%}">Edit</a></td>
+        <td><a href="{% url 'delete-task' task.id%}">Delete</a></td>
     </tr>
     {% empty %}
     <h3> You currently have no pending tasks </h3>
