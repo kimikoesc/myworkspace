@@ -1,0 +1,14 @@
+<h1>Workspace Tasks</h1>
+
+<table>
+    <tr>
+        <th> Item </th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <th> {{ task }} </th>
+    </tr>
+    {% empty %}
+    <h3> You currently have no pending tasks </h3>
+    {% endfor %}
+</table>
