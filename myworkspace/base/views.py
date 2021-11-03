@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView # GET all
 from django.views.generic.detail import DetailView # GET specific
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView # POST request
@@ -14,11 +14,37 @@ from .models import Tasks, Workspace # User should already be logged in after re
 
 # Create your views here.
 
-class WorkspaceList(ListView):
+class Login(LoginView):
+    template_name = 'base/login.html'
+    redirect_authenticated_user = True
+    fields = '__all__'
+    
+    # Once the user succesfully logs in, redirect to tasks
+    def get_success_url(self) -> str:
+        return reverse_lazy('workspacelist')
+
+class SignUp(FormView):
+    template_name = 'base/signup.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('workspacelist') 
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(SignUp, self).form_valid(form)
+    
+    def get(self, *args, **kwargs):
+        if (self.request.user.is_authenticated):
+            return redirect('tasks')
+        return super(SignUp, self).get(*args, **kwargs);
+
+
+class WorkspaceList(LoginRequiredMixin, ListView):
     model = Workspace
     context_object_name = "workspaces"
 
-class WorkspaceTasks(ListView):
+class WorkspaceTasks(LoginRequiredMixin, ListView):
     model = Tasks
     context_object_name = "tasks"
 
@@ -29,33 +55,33 @@ class WorkspaceTasks(ListView):
             context['tasks'] = context['tasks'].filter(workspace=selectedWorkspace)
             return context
 
-class WorkspaceCreate(CreateView):
+class WorkspaceCreate(LoginRequiredMixin, CreateView):
     model = Workspace
     fields = "__all__"
     success_url = reverse_lazy('workspacelist')
 
-class WorkspaceUpdate(UpdateView):
+class WorkspaceUpdate(LoginRequiredMixin, UpdateView):
     model = Workspace
     fields = "__all__"
     success_url = reverse_lazy('workspacelist')
 
-class WorkspaceDelete(DeleteView):
+class WorkspaceDelete(LoginRequiredMixin, DeleteView):
     model = Workspace
     context_object_name = 'workspace'
     success_url = reverse_lazy('workspacelist') 
 
 
-class TaskCreate(CreateView):
+class TaskCreate(LoginRequiredMixin, CreateView):
     model = Tasks
     fields = "__all__"
     success_url = reverse_lazy('view-workspace')
 
-class TaskUpdate(UpdateView):
+class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Tasks
     fields = "__all__"
     success_url = reverse_lazy('view-workspace')
 
-class TaskDelete(DeleteView):
+class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Tasks
     context_object_name = 'task'
     success_url = reverse_lazy('view-workspace')
