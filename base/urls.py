@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
-
+from .views import WorkspaceList, WorkspaceTasks
+ 
 urlpatterns = [
-    path('', views.taskList, name="tasks")
-    ]
+    path('', WorkspaceList.as_view(), name="workspacelist"),
+    path('workspace/', WorkspaceTasks.as_view(), name="view-workspace")
+    ]  

@@ -1,0 +1,18 @@
+<h1>Workspace List</h1> 
+
+<table>
+    <tr>
+        <th> Item </th>
+    </tr>
+    {% for workspace in workspaces %}
+    <tr>
+        <th> {{ workspace.workspace_name }} </th>
+        <form method="GET" action="{% url 'view-workspace' %}">
+            <input type="hidden" name='id' value="{{ workspace.id }}">
+            <td><input type="submit" value='view'></td>
+        </form>
+    </tr>
+    {% empty %}
+    <h3> You currently have no workspaces </h3>
+    {% endfor %}
+</table>
