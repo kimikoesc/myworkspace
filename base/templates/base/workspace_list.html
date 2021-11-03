@@ -1,10 +1,29 @@
 {% extends 'base/main.html' %}
 {% block content %}
 
-<h2>Your Workspaces</h2> 
-<a href="{% url 'new-workspace' %}">Add a workspace</a>
+<h1>Your Workspaces</h1> 
+<a id="add-anch" href="{% url 'new-workspace' %}">Add a workspace</a>
 
-<table>
+<div class="flex-container">
+    {% for workspace in workspaces %}
+    <div class="flex-items">
+        <h2> {{ workspace.workspace_name }} </h1>
+        <span class="form">
+            <form method="GET" action="{% url 'view-workspace' %}">
+                    <input type="hidden" name='id' value="{{ workspace.id }}">
+                    <input id="submit" type="submit" value='View'>
+            </form>
+        </span>
+        <a href="{% url 'edit-workspace' workspace.id %}"><button>Edit</button></a>
+        <a href="{% url 'delete-workspace' workspace.id %}"><button>Delete</button></a>
+
+    </div>
+    {% empty %}
+    <h3> You currently have no workspaces </h3>
+    {% endfor %}
+</div>
+
+<!-- <table>
     <tr>
         <th></th>
         <th></th>
@@ -23,6 +42,6 @@
     {% empty %}
     <h3> You currently have no workspaces </h3>
     {% endfor %}
-</table>
+</table> -->
 
 {% endblock content %}
