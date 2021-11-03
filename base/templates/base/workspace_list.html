@@ -1,3 +1,11 @@
+{% if request.user.is_authenticated %}
+    <p>{{request.user}}</p>
+    <a href="{% url 'logout' %}"><button>Logout</button></a>
+{% else %}
+    <a href="{% url 'login' %}"><button>Login</button></a>
+{% endif %}
+
+<hr>
 <h1>Your Workspaces</h1> 
 <a href="{% url 'new-workspace' %}">Add a workspace</a>
 
