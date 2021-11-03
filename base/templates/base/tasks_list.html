@@ -1,11 +1,13 @@
-<h1>Workspace Tasks</h1>
+{% extends 'base/main.html' %}
+{% block content %}
+
+<h2>Workspace Tasks</h2>
 <a href="{% url 'new-task' %}">Add Task</a>
 <a href="{% url 'workspacelist' %}">Back</a>
 
 
 <table>
     <tr>
-        <th> Item </th>
         <th></th>
         <th></th>
     </tr>
@@ -19,3 +21,5 @@
     <h3> You currently have no pending tasks </h3>
     {% endfor %}
 </table>
+
+{% endblock content %}
