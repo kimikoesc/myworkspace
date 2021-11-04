@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.list import ListView # GET all
 from django.views.generic.detail import DetailView # GET specific
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView # POST request
-from django.urls import reverse_lazy # redirects user to a different page
+from django.urls import reverse_lazy, reverse # redirects user to a different page
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -51,13 +51,17 @@ class WorkspaceList(LoginRequiredMixin, ListView):
 
 class WorkspaceTasks(LoginRequiredMixin, ListView):
     model = Tasks
-    context_object_name = "tasks"
-
+    context_object_name = "allTasks"
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         selectedWorkspace = self.request.GET.get('id')
+        selectedWorkspaceName = self.request.GET.get('name')
         if selectedWorkspace:
-            context['tasks'] = context['tasks'].filter(workspace=selectedWorkspace)
+            context['allTasks'] = context['allTasks'].filter(workspace=selectedWorkspace)
+            context['myTasks'] = context['allTasks'].filter(assigned_to=self.request.user)
+            context['workspace'] = selectedWorkspaceName
+            context['workspaceID'] = selectedWorkspace
             return context
 
 class WorkspaceCreate(LoginRequiredMixin, CreateView):
@@ -75,18 +79,32 @@ class WorkspaceDelete(LoginRequiredMixin, DeleteView):
     context_object_name = 'workspace'
     success_url = reverse_lazy('workspacelist') 
 
-
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Tasks
     fields = "__all__"
-    success_url = reverse_lazy('view-workspace')
 
+    def get_success_url(self):
+        selectedWorkspace = self.request.GET.get('id')
+        selectedWorkspaceName = self.request.GET.get('name')
+        res = reverse_lazy('view-workspace') + f'?id={selectedWorkspace}&name={selectedWorkspaceName}'
+        return res
+        
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Tasks
-    fields = "__all__"
-    success_url = reverse_lazy('view-workspace')
+    fields = ['assigned_to', 'title', 'description', 'complete']
+
+    def get_success_url(self):
+        selectedWorkspace = self.request.GET.get('id')
+        selectedWorkspaceName = self.request.GET.get('name')
+        res = reverse_lazy('view-workspace') + f'?id={selectedWorkspace}&name={selectedWorkspaceName}'
+        return res
 
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Tasks
     context_object_name = 'task'
-    success_url = reverse_lazy('view-workspace')
+
+    def get_success_url(self):
+        selectedWorkspace = self.request.GET.get('id')
+        selectedWorkspaceName = self.request.GET.get('name')
+        res = reverse_lazy('view-workspace') + f'?id={selectedWorkspace}&name={selectedWorkspaceName}'
+        return res

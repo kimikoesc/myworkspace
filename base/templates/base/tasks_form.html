@@ -1,11 +1,9 @@
 {% extends 'base/main.html' %}
 {% block content %}
 
-<h3>Task Form</h3>
-<a href="{% url 'view-workspace' %}">Back</a>
-
+<a href="{% url 'view-workspace' %}?id={{request.GET.id}}&name={{request.GET.name}}">Back</a>
 <form method="POST" action="">
-    {% csrf_token %}
+    {% csrf_token %}  
     {{ form.as_p }}
     <input type="submit" value="Submit">
 </form>
