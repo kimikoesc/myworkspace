@@ -30,10 +30,10 @@ header h1 {
 
 .flex-items:hover {
     transform: scale(1.1);
-    -moz-box-shadow: 15px 18px 2px -1px rgb(255, 223, 137);
-    -webkit-box-shadow: 15px 18px 2px -1px rgb(255, 223, 137);
-    -ms-box-shadow: 15px 18px 2px -1px rgb(255, 223, 137);
-    box-shadow: 15px 18px 2px -1px rgb(255, 223, 137);
+    -moz-box-shadow: 15px 18px 2px -1px rgb(59, 63, 65);
+    -webkit-box-shadow: 15px 18px 2px -1px rgb(59, 63, 65);
+    -ms-box-shadow: 15px 18px 2px -1px rgb(59, 63, 65);
+    box-shadow: 15px 18px 2px -1px rgb(59, 63, 65);
 }
 
 .flex-items {    
