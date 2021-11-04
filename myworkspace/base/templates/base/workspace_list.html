@@ -1,6 +1,5 @@
 {% extends 'base/main.html' %}
 {% block content %}
-
 <h1>Your Workspaces</h1> 
 <a id="add-anch" href="{% url 'new-workspace' %}">Add a workspace</a>
 
@@ -11,6 +10,7 @@
         <span class="form">
             <form method="GET" action="{% url 'view-workspace' %}">
                     <input type="hidden" name='id' value="{{ workspace.id }}">
+                    <input type="hidden" name='name' value="{{ workspace.workspace_name }}">
                     <input id="submit" type="submit" value='View'>
             </form>
         </span>
@@ -22,26 +22,5 @@
     <h3> You currently have no workspaces </h3>
     {% endfor %}
 </div>
-
-<!-- <table>
-    <tr>
-        <th></th>
-        <th></th>
-    </tr>
-    {% for workspace in workspaces %}
-    <tr>
-        <th> {{ workspace.workspace_name }} </th>
-        <form method="GET" action="{% url 'view-workspace' %}">
-            <input type="hidden" name='id' value="{{ workspace.id }}">
-            <td><input type="submit" value='view'></td>
-        </form>
-        <td><a href="{% url 'edit-workspace' workspace.id %}">Edit</td>
-        <td><a href="{% url 'delete-workspace' workspace.id %}">Delete</td>
-
-    </tr>
-    {% empty %}
-    <h3> You currently have no workspaces </h3>
-    {% endfor %}
-</table> -->
 
 {% endblock content %}

@@ -1,7 +1,7 @@
 {% extends 'base/main.html' %}
 {% block content %}
 
-<a href="{% url 'view-workspace' %}"></a>
+<a href="{% url 'view-workspace' %}?id={{request.GET.id}}&name={{request.GET.name}}">Back</a>
 <form method="POST">
     {% csrf_token %}
     <p> Are you sure you want to delete "{{task}}"?</p>

@@ -1,25 +1,41 @@
 {% extends 'base/main.html' %}
 {% block content %}
 
-<h2>Workspace Tasks</h2>
-<a href="{% url 'new-task' %}">Add Task</a>
+<h2>{{ workspace }} Tasks</h2>
+<a href="{% url 'new-task' %}?id={{workspaceID}}&name={{workspace}}">Add Task</a>
 <a href="{% url 'workspacelist' %}">Back</a>
 
-
-<table>
-    <tr>
-        <th></th>
-        <th></th>
-    </tr>
-    {% for task in tasks %}
-    <tr>
-        <th> {{ task }} </th>
-        <td><a href="{% url 'edit-task' task.id%}">Edit</a></td>
-        <td><a href="{% url 'delete-task' task.id%}">Delete</a></td>
-    </tr>
-    {% empty %}
-    <h3> You currently have no pending tasks </h3>
-    {% endfor %}
-</table>
+<div class="tasklist">
+    <div class="flex-container">
+        <div class="flex-items">
+            <h3> All Tasks </h3>
+            {% for task in allTasks %}
+            <div class="task-name">
+                <p>{{ task }}</p>
+                <div>
+                    <a href="{% url 'edit-task' task.id%}?id={{workspaceID}}&name={{workspace}}">Edit</a>
+                    <a href="{% url 'delete-task' task.id%}?id={{workspaceID}}&name={{workspace}}">Delete</a>
+                </div>
+            </div>
+            {% empty %}
+            <p> Your workspace currently has no pending tasks </p>
+            {% endfor %}
+        </div>
+        <div class="flex-items">
+            <h3> Tasks assigned to you </h3>
+            {% for task in myTasks %}
+            <div class="task-name">
+                <p> {{ task }} </p>
+                <div>
+                    <a href="{% url 'edit-task' task.id%}?id={{workspaceID}}&name={{workspace}}">Edit</a>
+                    <a href="{% url 'delete-task' task.id%}?id={{workspaceID}}&name={{workspace}}">Delete</a>
+                </div>
+            </div>
+            {% empty %}
+            <p> You currently have no pending tasks </p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
