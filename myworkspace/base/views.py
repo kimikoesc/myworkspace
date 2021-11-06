@@ -1,16 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic.list import ListView # GET all
-from django.views.generic.detail import DetailView # GET specific
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView # POST request
-from django.urls import reverse_lazy, reverse # redirects user to a different page
+from django.urls import reverse_lazy # redirects user to a different page
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
-from .models import Tasks, Workspace # User should already be logged in after register
-
+from .models import Tasks, Workspace 
 
 # Create your views here.
 
@@ -81,7 +79,12 @@ class WorkspaceDelete(LoginRequiredMixin, DeleteView):
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Tasks
-    fields = "__all__"
+    fields = ['assigned_to', 'title', 'description', 'complete']
+
+    def form_valid(self, form):
+        selectedWorkspace = self.request.GET.get('id')
+        form.instance.workspace = Workspace.objects.get(id=selectedWorkspace)
+        return super(TaskCreate, self).form_valid(form)
 
     def get_success_url(self):
         selectedWorkspace = self.request.GET.get('id')
