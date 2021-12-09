@@ -14,7 +14,7 @@
         <h1>Hello, {{request.user}}</h1>
         <a href="{% url 'logout' %}"><button id="logout-button">Logout</button></a>
         {% else %}
-        <a href="{% url 'login' %}"><button>Login</button></a>
+        <h1>Hello there!</h1>
         {% endif %}
     </header>
     <div class="container">
