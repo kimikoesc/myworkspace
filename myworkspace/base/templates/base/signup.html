@@ -5,8 +5,22 @@
 
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="register">
+    <div>
+        {{ form.username.label }}
+        {{ form.username }}
+    </div>
+</br>
+    <div>
+        {{ form.password1.label }}
+        {{ form.password1 }}
+    </div> 
+</br>
+    <div>
+        {{ form.password2.label }}
+        {{ form.password2 }}
+    </div>
+</br>
+    <input class="signin-button" type="submit" value="register">
 </form>
 
 <p>

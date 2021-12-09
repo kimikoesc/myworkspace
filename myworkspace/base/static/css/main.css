@@ -141,3 +141,16 @@ button:hover {
     align-items: center;
     justify-content: space-between;
 }
+
+.signin-button {
+    border: none;
+    border-radius: 5px;
+    padding: 14px 25px;
+    color: white;
+    background-color: rgb(226,153,173);
+    margin-bottom: 10px; 
+}
+
+#signup-form {
+    justify-content: left;
+}
