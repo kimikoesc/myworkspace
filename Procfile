@@ -1,1 +1,1 @@
-web: gunicorn myworkspace.wsgi --log-file -
+web: gunicorn myworkspace.wsgi --log-file - 
