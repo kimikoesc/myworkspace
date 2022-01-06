@@ -14,7 +14,7 @@
 
 ## Introduction
 
-<p> This is a project that was created for fun! </p>
+<p> Manage all of your projects in one space! Once you sign up, you will be able to add your different projects, and share it with your team. You will also be able to assign tasks to your teammates, and everyone on the team can add, edit, and delete tasks. </p>
 
 ## Live Application
 
